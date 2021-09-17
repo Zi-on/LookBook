@@ -52,7 +52,7 @@ const resolvers = {
             );
         },
         removeBook: async (parent, { bookId }) => {
-            return User.findOneAndDelete({ _id: userId });
+            return User.findOneAndDelete({ _id: bookId });
         }
 
     }
