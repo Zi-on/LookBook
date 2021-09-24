@@ -58,9 +58,7 @@ const SavedBooks = () => {
     try {
       const response = await removeBook(bookId, token);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+    
 
      
       // upon success, remove book's id from localStorage
