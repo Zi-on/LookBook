@@ -15,12 +15,12 @@ const server = new ApolloServer({
 
   context: authMiddleware,
 });
-server.applyMiddleware({app})
-// const appmiddle = async() => {
-//   await server.start()
-//   server.applyMiddleware({app})
-// };
-// appmiddle();
+// server.applyMiddleware({app})
+const appmiddle = async() => {
+  await server.start()
+  console.log("adding middleware")
+  server.applyMiddleware({app})
+};
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-
+appmiddle();
 // app.use(routes);
 
 db.once('open', () => {
