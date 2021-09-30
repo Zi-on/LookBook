@@ -4,8 +4,16 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        me: async (parent, { userId }) => {
-            return User.findOne({ _id: userId });
+        me: async (parent, args, context) => {
+            console.log(context.user);
+            if(context.user) {
+                const userData = await User.findOne({})
+                .select('-__v -password')
+                .populate('books')
+
+            return userData;
+            }
+            
         },
     },
     Mutation: {
@@ -32,17 +40,19 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        saveBook: async (parent, { userId, author, description, title, bookId, image, link }) => {
+        saveBook: async (parent, args, context) => {
+            console.log(context.user)
+            console.log( args.input)
             return User.findOneAndUpdate(
-                { _id: userId },
+                { _id: context.user._id },
                 {
-                    $addToSet: {
-                        authors: author,
-                        description: description,
-                        title: title,
-                        bookId: bookId,
-                        image: image,
-                        link: link,
+                    $SetBook: {
+                        authors: args.input.authors,
+                        description: args.input.description,
+                        title: args.input.title,
+                        bookId: args.input.bookId,
+                        image: args.input.image,
+                        link: args.input.link,
                     }
                 },
                 {
