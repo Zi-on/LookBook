@@ -12,15 +12,12 @@ const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
-  
-
-  const { username: userParam } = useParams()
 
   const { loading, data } = useQuery(GET_ME)
 
   const [removeBook, {error}] = useMutation(REMOVE_BOOK);
 
-  const userData = data?.me || {};
+  const userData = data?.me || [];
 
   const userDataLength = Object.keys(userData).length;
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
