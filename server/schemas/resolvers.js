@@ -15,6 +15,7 @@ const resolvers = {
 
             return { token, user };
         },
+        
         login: async (parent, { email, password }) => {
             const user = User.findOne({ email });
 
@@ -22,7 +23,7 @@ const resolvers = {
                 throw new AuthenticationError('No profile with this email found!');
             }
 
-            const correctPw = await profile.isCorrectPassword(password);
+            const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
                 throw new AuthenticationError('Incorrect password!');
