@@ -15,23 +15,22 @@ const resolvers = {
 
             return { token, user };
         },
-        
+
         login: async (parent, { email, password }) => {
-            const user = User.findOne({ email });
+            const user = await User.findOne({ email });
 
             if (!user) {
-                throw new AuthenticationError('No profile with this email found!');
+              throw new AuthenticationError('No profile with this email found!');
             }
-
+      
             const correctPw = await user.isCorrectPassword(password);
-
+      
             if (!correctPw) {
-                throw new AuthenticationError('Incorrect password!');
-              }
-
-            const token = signToken(user)
-
-            return { token, user }
+              throw new AuthenticationError('Incorrect password!');
+            }
+      
+            const token = signToken(user);
+            return { token, user };
         },
         saveBook: async (parent, { userId, author, description, title, bookId, image, link }) => {
             return User.findOneAndUpdate(
