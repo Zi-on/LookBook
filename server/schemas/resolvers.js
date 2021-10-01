@@ -46,13 +46,8 @@ const resolvers = {
             return User.findOneAndUpdate(
                 { _id: context.user._id },
                 {
-                    $SetBook: {
-                        authors: args.input.authors,
-                        description: args.input.description,
-                        title: args.input.title,
-                        bookId: args.input.bookId,
-                        image: args.input.image,
-                        link: args.input.link,
+                    $push: {
+                        savedBooks: args.input
                     }
                 },
                 {
