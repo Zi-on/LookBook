@@ -15,6 +15,7 @@ const server = new ApolloServer({
 
   context: authMiddleware,
 });
+require('dotenv').config();
 // server.applyMiddleware({app})
 const appmiddle = async() => {
   await server.start()
