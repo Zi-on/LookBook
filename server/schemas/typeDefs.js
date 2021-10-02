@@ -23,7 +23,7 @@ const typeDefs = gql`
         user: User
     }
 
-    input SetBook{
+    input SetBook {
         bookId: String
         authors: [String]
         description: String
